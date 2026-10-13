@@ -16,6 +16,7 @@
 ## 먼저 알아두면 좋은 배경: CocoaPods와 SPM
 
 > **비유**
+>
 > iOS 앱은 **레고 성**이고, 플러그인은 **레고 부품 상자**예요.
 > 부품 상자를 성까지 가져다주는 **택배 회사가 두 곳** 있어요. 오래된 **CocoaPods**, 그리고 애플이 만든 새 회사 **SPM(Swift Package Manager)**.
 > Flutter가 기본 택배 회사를 SPM으로 바꾸는 중이라, 상자에 **SPM용 송장(`Package.swift`)** 이 없으면 경고가 뜨고, Flutter는 이게 나중에 에러가 될 거라고 안내하고 있어요.
@@ -37,6 +38,7 @@ flowchart LR
 [PR #12267](https://github.com/flutter/packages/pull/12267) · Fixes [flutter/flutter#132154](https://github.com/flutter/flutter/issues/132154) (2023년부터 열려 있던 이슈) · `image_picker` 월 약 500만 다운로드
 
 > **비유**
+>
 > 도우미에게 "사진첩에서 사진 하나 골라서 액자에 넣어줘"라고 부탁했어요.
 > 그런데 고른 사진이 액자(`UIImage`)에 안 들어가는 **이상한 형식(AVIF)** 이었어요.
 > 예전 도우미는 **빈 액자를 든 채 아무 말 없이 서 있거나**, 빈 액자를 들고 **"다 했어요!"** 라고 했어요. 앱은 계속 기다리기만 했죠.
@@ -99,6 +101,7 @@ sequenceDiagram
 [PR #387](https://github.com/Dev-hwang/flutter_foreground_task/pull/387) · v11.0.0에 포함 · 월 약 21.9만 다운로드 · +1,276줄 / 24파일
 
 > **비유**
+>
 > 새 택배 회사(SPM)에는 **"한 상자에는 한 나라 말(언어)로 된 부품만"** 이라는 규칙이 있어요.
 > 그런데 이 플러그인 상자에는 **Objective-C 부품과 Swift 부품이 섞여** 있어서 SPM이 받아주지 않았어요.
 > 그래서 **Swift 부품만 담은 새 상자**를 하나 더 만들어 SPM으로 보내고, 원래 섞여 있던 상자는 **그대로 CocoaPods로** 보내게 했어요.
@@ -144,6 +147,7 @@ flowchart LR
 [PR #3](https://github.com/ArmanKT/image_gallery_saver_plus/pull/3) · 월 약 13.6만 다운로드
 
 > **비유**
+>
 > 이 상자에는 SPM 송장(`Package.swift`)이 이미 있었어요. 그런데 송장에
 > **"옆집(`../FlutterFramework`)에서 Flutter 부품도 같이 받아 오세요"** 라고 잘못 적혀 있었어요.
 > 그 옆집은 **존재하지 않아요.** 그래서 택배 기사가 옆집을 못 찾고 **배달 전체가 실패**했어요.
@@ -178,6 +182,7 @@ flowchart LR
 [PR #10](https://github.com/Wing-Li/flutter_is_lock_screen2/pull/10) · v2.1.0에 포함 · +409 / -148줄
 
 > **비유**
+>
 > 2번과 같은 문제예요. Objective-C와 Swift가 섞인 상자라서 새 택배(SPM)가 안 받아줬어요.
 > **Swift만 담은 새 상자**를 만들어서 SPM으로 보내고, 기존 상자는 CocoaPods로 그대로 보내게 했어요.
 
@@ -207,6 +212,7 @@ flowchart LR
 [pub.dev](https://pub.dev/packages/flutter_mute_plus) · [GitHub](https://github.com/TeddyYeung/flutter_mute_plus) · **160/160 pub points** · [Flutter Gems 등록 신청](https://github.com/fluttergems/fluttergems/pull/1013)
 
 > **비유**
+>
 > 동네 장난감 `flutter_mute`는 2021년 이후로 **고쳐 주는 사람이 없어서**, 새로 생긴 놀이터(최신 Android, Xcode, SPM)에서는 **작동을 안 했어요.**
 > 다른 아이들이 고친 부품(PR)을 보내도 주인이 **받아 주지 않았어요.**
 > 그래서 내가 장난감을 **복제(fork)** 해서, 그 부품들을 끼우고, 아무도 몰랐던 고장까지 찾아서 고친 다음, **새 이름으로 다시 내놓았어요.**
