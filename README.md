@@ -9,7 +9,8 @@
 | 2 | [`flutter_foreground_task`](#2-flutter_foreground_task) | ObjC + Swift 섞인 플러그인에 SPM 지원 추가 | Merged, v11.0.0 배포 |
 | 3 | [`image_gallery_saver_plus`](#3-image_gallery_saver_plus) | 잘못 적힌 `Package.swift` 한 줄 때문에 깨지던 빌드 수정 | Merged |
 | 4 | [`is_lock_screen2`](#4-is_lock_screen2) | SPM 지원 추가 (CocoaPods 유지) | Merged, v2.1.0 배포 |
-| 5 | [`flutter_mute_plus`](#5-flutter_mute_plus-직접-관리하는-패키지) | 방치된 패키지를 포크해서 고치고 직접 배포 | pub.dev 1.1.0, 160/160 pub points |
+| 5 | [`flutter_jailbreak_detection_plus`](#5-flutter_jailbreak_detection_plus) | 탈옥 감지 플러그인에 SPM 지원 추가 (외부 의존성까지 SPM으로) | Merged, v1.10.8 배포 |
+| 6 | [`flutter_mute_plus`](#6-flutter_mute_plus-직접-관리하는-패키지) | 방치된 패키지를 포크해서 고치고 직접 배포 | pub.dev 1.1.0, 160/160 pub points |
 
 ---
 
@@ -207,7 +208,53 @@ flowchart LR
 
 ---
 
-## 5. `flutter_mute_plus` (직접 관리하는 패키지)
+## 5. `flutter_jailbreak_detection_plus`
+
+[PR #9](https://github.com/yazanalkamsheh/flutter_jailbreak_detection_plus/pull/9) · v1.10.8에 포함 · 월 약 6.3만 다운로드 · +49줄 / 3파일
+
+> **비유**
+>
+> 이 상자도 2번, 4번처럼 Objective-C와 Swift 부품이 섞여 있어서 새 택배(SPM)가 받아 주지 않았어요.
+> 그런데 이 상자에는 하나가 더 있어요. 탈옥 여부를 검사하는 **다른 회사 부품(`IOSSecuritySuite`)** 이 꼭 같이 와야 해요. CocoaPods 송장에는 적혀 있었지만, SPM 송장은 아예 없었죠.
+> 그래서 **Swift만 담은 새 상자**를 만들고, SPM 송장에 **"`IOSSecuritySuite`도 SPM으로 같이 받아 오세요"** 라고 적었어요.
+> 새 상자 안 부품 이름을 원래 부품과 **똑같이(`FlutterJailbreakDetectionPlugin`)** 지어서, 플러그인 설정(`pubspec.yaml`)은 한 글자도 바꾸지 않았어요.
+
+```mermaid
+flowchart LR
+    subgraph OLD["ios/Classes (변경 없음)"]
+        O["ObjC 래퍼 + Swift 구현"]
+    end
+    subgraph NEW["Sources/flutter_jailbreak_detection_plus (새로 추가)"]
+        N["FlutterJailbreakDetectionPlugin.swift"]
+    end
+    ISS["IOSSecuritySuite"]
+    ISS -.->|"podspec 의존성"| OLD
+    ISS -.->|"Package.swift 의존성 (2.2.0 이상)"| NEW
+    OLD --> CP["CocoaPods"]
+    NEW --> SPM["SPM"]
+    CP --> APP["iOS 앱"]
+    SPM --> APP
+```
+
+### 기술 상세
+- `ios/flutter_jailbreak_detection_plus/Package.swift` 추가 (swift-tools-version 5.9). `IOSSecuritySuite`의 Swift 패키지가 iOS 11부터 지원해서 SPM 경로만 iOS 11.0이고, podspec은 기존 10.0 그대로
+- `IOSSecuritySuite`를 SwiftPM 의존성으로 추가 (`from: "2.2.0"`)
+- SPM 타깃에 기존 `flutter_jailbreak_detection` method channel을 그대로 등록하는 Swift 클래스 추가 (`jailbroken`, `developerMode`). 클래스 이름이 `pubspec.yaml`의 `pluginClass`와 같아서 pubspec 수정 없음
+- Dart API, Android, CocoaPods 파일은 변경 없음
+- 검증: SPM 켠 빌드 / 끈 빌드 **둘 다 성공**, `pod lib lint` 통과
+
+### 머지까지의 과정
+
+| 날짜 | 일어난 일 |
+|---|---|
+| 06-26 | PR 오픈 |
+| 07-27 | 리뷰 승인 |
+| 08-06 ~ 09-30 | 메인테이너 응답이 없어 세 번 정중하게 리마인드 (마지막 커밋이 2025년 10월이라 유지보수 가능 여부도 확인) |
+| 10-27 | 메인테이너가 SPM 빌드를 직접 확인하고 머지, 같은 날 v1.10.8로 pub.dev 배포 |
+
+---
+
+## 6. `flutter_mute_plus` (직접 관리하는 패키지)
 
 [pub.dev](https://pub.dev/packages/flutter_mute_plus) · [GitHub](https://github.com/TeddyYeung/flutter_mute_plus) · **160/160 pub points** · [Flutter Gems 등록 신청](https://github.com/fluttergems/fluttergems/pull/1013)
 
